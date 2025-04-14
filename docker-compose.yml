@@ -1,0 +1,67 @@
+version: '3.8'  # Aunque es obsoleto, lo mantengo por compatibilidad
+
+services:
+  db:
+    image: postgres:13
+    container_name: odoo-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo
+    volumes:
+      - odoo-db-data:/var/lib/postgresql/data
+      - ./db/backups:/backups
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U odoo"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - odoo-net
+
+  odoo:
+    build: .
+    container_name: odoo-app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8069:8069"
+      - "8072:8072"
+    volumes:
+      - odoo-web-data:/var/lib/odoo
+      - ./logs:/var/log/odoo
+      - ./config/odoo.conf:/etc/odoo/odoo.conf
+      - ./addons/AEROPORTUARIA_ERP:/mnt/extra-addons/AEROPORTUARIA_ERP
+      - ./addons/AEROPORTUARIA_ERP/account:/mnt/extra-addons/account
+      - ./addons/AEROPORTUARIA_ERP/asset:/mnt/extra-addons/asset
+      - ./addons/AEROPORTUARIA_ERP/budget:/mnt/extra-addons/budget
+      - ./addons/AEROPORTUARIA_ERP/other:/mnt/extra-addons/other
+      - ./addons/AEROPORTUARIA_ERP/productivity:/mnt/extra-addons/productivity
+      - ./addons/AEROPORTUARIA_ERP/themes:/mnt/extra-addons/themes
+    environment:
+      - HOST=db
+      - USER=odoo
+      - PASSWORD=odoo
+      - ADDONS_PATH=/mnt/extra-addons/AEROPORTUARIA_ERP,/mnt/extra-addons/account,/mnt/extra-addons/asset,/mnt/extra-addons/budget,/mnt/extra-addons/other,/mnt/extra-addons/productivity,/mnt/extra-addons/themes,/opt/odoo/addons
+      - ADMIN_PASSWD=admin123
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8069/web/health"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
+      start_period: 2m
+    networks:
+      - odoo-net
+
+volumes:
+  odoo-db-data:
+    driver: local
+  odoo-web-data:
+    driver: local
+
+networks:
+  odoo-net:
+    driver: bridge
