@@ -92,7 +92,7 @@ Odoo busca una base de datos que se llame `odoo` (o la configurada en el paráme
    cp /ruta/al/archivo.dump ./db/backups
    ```
 
-2. Accede nuevamente al contenedor del servicio PostgreSQL:
+2. Accede nuevamente al contenedor del servicio PostgreSQL(si no esta dentro del contenedor):
    ```bash
    docker exec -it odoo-db bash
    ```
