@@ -23,6 +23,8 @@ RUN apt-get update && apt-get install -y \
     wget \
     git \
     build-essential \
+    cron \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Instalar dependencias específicas para wkhtmltopdf primero
@@ -51,7 +53,8 @@ RUN wget -q https://github.com/odoo/odoo/archive/${ODOO_VERSION}.tar.gz \
 RUN pip3 install --no-cache-dir \
     wheel==0.37.1 \
     setuptools==59.6.0 \
-    cython==0.29.33
+    cython==0.29.33 \
+    psycopg2-binary
 
 # Copiar tu archivo requirements.txt al contenedor
 COPY requirements.txt /tmp/requirements.txt
@@ -65,23 +68,48 @@ RUN pip3 install --no-cache-dir -r /opt/odoo/requirements.txt
 # Configuración del usuario y directorios
 RUN useradd -m -d /opt/odoo -U -r -s /bin/bash odoo \
     && mkdir -p /mnt/extra-addons \
-    && chown odoo:odoo /mnt/extra-addons
+    && mkdir -p /var/lib/odoo/sessions \
+    && mkdir -p /home/odoo/PY/archivos \
+    && mkdir -p /home/odoo/PY/logs \
+    && mkdir -p /home/odoo/PY/scripts \
+    && mkdir -p /opt/scripts/shell \
+    && chown -R odoo:odoo /opt/odoo \
+    && chown -R odoo:odoo /mnt/extra-addons \
+    && chown -R odoo:odoo /var/lib/odoo \
+    && chown -R odoo:odoo /home/odoo/PY \
+    && chmod 755 /var/lib/odoo
 
 # Copiar módulos y configuración
 COPY addons/Aeroportuaria_ERP /mnt/extra-addons/Aeroportuaria_ERP
 COPY config/odoo.conf /etc/odoo/odoo.conf
-RUN chown odoo:odoo /etc/odoo/odoo.conf
+COPY scripts/python/subidas_archivos_pagos_urg.py /home/odoo/PY/scripts/
+COPY scripts/shell/ /opt/scripts/shell/
 
-# Crear directorio de sesiones y asignar permisos
-RUN mkdir -p /var/lib/odoo/sessions \
-    && chown -R odoo:odoo /var/lib/odoo \
-    && chmod 755 /var/lib/odoo
+# Configurar permisos
+RUN chown odoo:odoo /etc/odoo/odoo.conf \
+    && chmod +x /opt/scripts/shell/*.sh
 
+# Configurar cron
+RUN echo "*/5 * * * * odoo /usr/bin/python3 /home/odoo/PY/scripts/subidas_archivos_pagos_urg.py >> /home/odoo/PY/logs/script.log 2>&1" >> /etc/cron.d/odoo-cron \
+    && chmod 0644 /etc/cron.d/odoo-cron
+
+# Crear archivo para logs
+RUN touch /var/log/cron.log \
+    && chown odoo:odoo /var/log/cron.log
+
+# Script de inicio
+COPY entrypoint.sh /
+RUN chmod +x /entrypoint.sh
 
 # Configurar entorno
 WORKDIR /opt/odoo
-USER odoo
-EXPOSE 8069
+EXPOSE 8069 8072
 
-CMD ["python3", "/opt/odoo/odoo-bin", "-c", "/etc/odoo/odoo.conf"]
+COPY scripts/python/wait-for-it.py /usr/local/bin/
+RUN chmod +x /usr/local/bin/wait-for-it.py \
+    && sed -i 's/\r$//' /usr/local/bin/wait-for-it.py
 
+
+#Definir el punto de entrada y el comando
+ENTRYPOINT ["/entrypoint.sh"]
+#CMD ["python3", "/opt/odoo/odoo-bin", "-c", "/etc/odoo/odoo.conf"]

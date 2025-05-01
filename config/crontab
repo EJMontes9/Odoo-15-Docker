@@ -1,0 +1,5 @@
+# Verificar backups diariamente
+0 7 * * * /scripts/check_backups.sh
+
+# Limpiar backups antiguos semanalmente
+0 3 * * 0 /scripts/cleanup_backups.sh

@@ -1,0 +1,52 @@
+{
+  "port": 80,
+  "baseURL": "",
+  "address": "0.0.0.0",
+  "log": "stdout",
+  "database": "/database.db",
+  "root": "/srv",
+  "signup": false,
+  "createUserDir": false,
+  "defaults": {
+    "scope": ".",
+    "locale": "es",
+    "viewMode": "list",
+    "singleClick": false,
+    "sorting": {
+      "by": "name",
+      "asc": true
+    },
+    "perm": {
+      "admin": false,
+      "execute": true,
+      "create": true,
+      "rename": true,
+      "modify": true,
+      "delete": true,
+      "share": true,
+      "download": true
+    }
+  },
+  "auth": {
+    "method": "json",
+    "header": "X-Auth"
+  },
+  "users": {
+    "admin": {
+      "password": "$2a$10$XgXxGZH.V1P.zDZqV2qxqOQFs3QH8Dzr.K/P4YMD0bnn0D.7ArZtW",
+      "scope": "/",
+      "locale": "es",
+      "lockPassword": false,
+      "perm": {
+        "admin": true,
+        "execute": true,
+        "create": true,
+        "rename": true,
+        "modify": true,
+        "delete": true,
+        "share": true,
+        "download": true
+      }
+    }
+  }
+}

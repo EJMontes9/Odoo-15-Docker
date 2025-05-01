@@ -1,0 +1,11 @@
+{
+  "backend-module": "file",
+  "backend-path": "/backups",
+  "backup-name": "OdooSystemBackup",
+  "dbpath": "/data/duplicati-config.sqlite",
+  "encryption-module": "aes",
+  "compression-module": "zip",
+  "dblock-size": "50mb",
+  "keep-versions": "30",
+  "retention-policy": "1W:1D,4W:1W,12M:1M"
+}
