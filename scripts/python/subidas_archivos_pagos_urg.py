@@ -10,7 +10,7 @@ from datetime import datetime,timezone,date, timedelta
 
 #Base de datos
 conn = psycopg2.connect(
-  database="odoo", user='odoo', password='odoo', host='127.0.0.1', port='5432'
+  database="odoo", user='odoo', password='odoo', host='db', port='5432'
 )
 
 hora_file = date.today()
@@ -24,7 +24,7 @@ termino = 0
 
 #Variables
 contenido = pathlib.Path('/home/odoo/PY/archivos/')
-contenido_odoo = "/home/odoo/.local/share/Odoo/filestore/aeroportuaria/"
+contenido_odoo = "/var/lib/odoo/filestore/odoo/"
 archivo_log = "/home/odoo/PY/logs/"
 
 def log(log):
@@ -32,7 +32,7 @@ def log(log):
  archi1.write(log)
  archi1.close()
 
-def archi(archivos,icontrato,conn):
+def archi(archivos, icontrato, conn):
  global termino
  #Datos del archivos
  #  print(archivos)
@@ -60,34 +60,37 @@ def archi(archivos,icontrato,conn):
 
  # Obtengo los 2 primeros item para la carpeta
  dir = hash[0:2]
- # print ('dir',dir)
+ print ('dir',dir)
 
  # Armo la direccion de la carpeta con el archivo
+ ti=''
  dh = str(dir + '/' + hash)
- # print ('dh',dh)
+ print ('dh',dh)
 
  # Verificamos si existe el archivo
  direx = os.path.exists(contenido_odoo + dir)
  #  print (direx)
  if (direx == True):
-  # print("Existe")
+  print("Existe")
   o = "ok"
  else:
-  # print("no Existe",contenido_odoo + dir)
+  print("no Existe",contenido_odoo + dir)
   os.mkdir(contenido_odoo + dir)
 
  # Obtenemos el tamaño del archivo
  size = str(e.st_size)
- # print('size',size)
+ print('size',size)
 
  #Obtenemos la carpeta contenedora
  name_etapa = arc[6].replace(" ", "_")
- # print('etapa',name_etapa)
+ print('etapa',name_etapa)
 
  #vemos la carpeta es de pago
- if arc[7] == 'PAGOS':
-  pag = arc[8].split(" ")
+ print (arc)
+ if arc[6] == 'PAGOS':
+  pag = arc[7].split(" ")
   ti = arc[5] +"-PA-"+pag[1]
+  print("ti",ti)
 
   if termino == 0:
    # Se agrega al archivo log
@@ -96,15 +99,15 @@ def archi(archivos,icontrato,conn):
    print("-*-*-*-*-*-*-*-*-*- Se comienza a procesar pago " + ti+"-*-*-*-*-*-*-*-*-*-")
    termino = 1
 
-  sql_select = """SELECT id FROM public.foldergroups_odoo where name = '""" + arc[9] + """' and active = True"""
+  sql_select = """SELECT id FROM public.foldergroups_odoo where name = '""" + arc[8] + """' and active = True"""
   cursor = conn.cursor()
   cursor.execute(sql_select)
-  # print("busqueda", sql_select)
+  print("busqueda", sql_select)
   id_fol = cursor.fetchall()
 
   if len(id_fol) > 0:
     #obtenemos los nombre de los archivos y sus extensiones
-    name_archivo = arc[10].replace(" ", "_")
+    name_archivo = arc[9].replace(" ", "_")
 
     sql_select = """select id from payment_process where nro_pago = '"""+ti+"""' and estado = True"""
     cursor = conn.cursor()
@@ -186,7 +189,7 @@ def recorrer(path,icontrato,conn):
      recorrer(archivos,icontrato,conn)
 
 ###comienzo el pograma###
-print("----------COMIENZA EL PROGRAMA-----------")
+print("----------COMIENZA EL PROGRAMA 555555 -----------")
 # Se agrega al archivo log
 logs = "-*-*-*-*-*-*-*-*-*- Dia y hora del reporte: " + str(hora) + "-*-*-*-*-*-*-*-*-*- \n"
 log(logs)
