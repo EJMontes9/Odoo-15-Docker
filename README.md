@@ -149,3 +149,8 @@ docker logs -f odoo-app
 ```bash
 docker-compose down
 ```
+
+## Ejecucion del script:
+```bash
+docker exec -it odoo-app python3 /home/odoo/PY/scripts/subidas_archivos_pagos_urg.py
+```
