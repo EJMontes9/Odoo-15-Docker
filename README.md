@@ -154,3 +154,5 @@ docker-compose down
 ```bash
 docker exec -it odoo-app python3 /home/odoo/PY/scripts/subidas_archivos_pagos_urg.py
 ```
+
+Se debe asegurar que el archivo entrypoint.sh sea LF en vez de CRLF O CR
