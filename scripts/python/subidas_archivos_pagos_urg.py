@@ -204,11 +204,23 @@ for path in contenido.iterdir():
   x = fx.split("/")
   id_contract = x[5]
 
+  # Buscar primero en la tabla de procesos de contratación (hiring_process)
+  # El campo 'name' debe coincidir con id_contract y estado debe ser True
   sql_select = """SELECT id FROM public.hiring_process where name = '""" + id_contract + """' and estado = True"""
   cursor = conn.cursor()
   cursor.execute(sql_select)
-  #  print("busqueda",sql_select)
   id_hp = cursor.fetchall()
+  print("busqueda en hiring_process:", sql_select)
+
+  # Si no se encuentra en procesos de contratación (id_hp está vacío)
+  # buscar en la tabla de convenios (convenio_process)
+  if len(id_hp) == 0:
+   sql_select = """SELECT id FROM public.convenio_process where name = '""" + id_contract + """' and estado = True"""
+   cursor.execute(sql_select)
+   id_hp = cursor.fetchall()
+   print("busqueda en convenio_process:", sql_select)
+
+  print("id_hp", id_hp)
 
   if len(id_hp) > 0:
    # Se agrega al archivo log
