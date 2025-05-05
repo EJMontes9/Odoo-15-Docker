@@ -44,18 +44,53 @@ Este proyecto configura un entorno Odoo con PostgreSQL mediante Docker. Incluye 
 
 ## Configuración de la base de datos
 
-Odoo busca una base de datos que se llame `odoo` (o la configurada en el parámetro `dbfilter` del archivo `odoo.conf`). Si aún no la tienes configurada, puedes crearla siguiendo estos pasos.
+Odoo busca una base de datos que se llame `odoo` (o la configurada en el parámetro `dbfilter` del archivo `odoo.conf`).
 
----
+### **Nuevo método: Configuración desde el contenedor PostgreSQL**
 
-### **Cómo crear y restaurar una base de datos llamada `odoo`**
+Se ha implementado un nuevo enfoque para configurar la base de datos directamente desde el contenedor PostgreSQL. Este método ofrece mayor simplicidad, rendimiento y seguridad.
 
-**1. Crear la base de datos `odoo`:**
+Para utilizar este método:
+
+1. Coloca tu archivo `.dump` en la carpeta `./backups/db` de tu máquina anfitriona
+2. Inicia los contenedores con `docker-compose up -d`
+3. Ejecuta el script de configuración:
+
+   **Para Linux/Mac:**
+   ```bash
+   ./scripts/shell/setup_db_from_host.sh
+   ```
+
+   **Para Windows (PowerShell):**
+   ```bash
+   .\scripts\shell\setup_db_from_host.ps1
+   ```
+
+Para más detalles sobre este enfoque, consulta [README_DB_POSTGRES.md](README_DB_POSTGRES.md).
+
+### **Método anterior: Creación y restauración automática desde el contenedor Odoo**
+
+> **Nota**: Este método ya no se utiliza por defecto, pero se mantiene la documentación por compatibilidad.
+
+El sistema incluía un script de automatización que:
+
+1. Verifica si la base de datos `odoo` existe
+2. Si no existe, la crea automáticamente
+3. Busca el archivo `.dump` más reciente en la carpeta `./backups/db`
+4. Restaura ese archivo en la base de datos `odoo`
+
+Este proceso se ejecutaba automáticamente al iniciar el contenedor de Odoo.
+
+### **Creación y restauración manual (alternativa)**
+
+Si prefieres realizar el proceso manualmente, puedes seguir estos pasos:
+
+**1. Crear la base de datos `odoo` manualmente:**
 1. Accede al contenedor de la base de datos:
    ```bash
    docker exec -it odoo-db bash
    ```
-   
+
 2. Ingresa al cliente PostgreSQL:
    ```bash
    psql -U odoo -d postgres
@@ -71,41 +106,22 @@ Odoo busca una base de datos que se llame `odoo` (o la configurada en el paráme
    \l
    ```
 
-   Esto debería mostrar algo como:
-   ```
-      Name  | Owner | Encoding | Collate |   Ctype   |
-   ---------+-------+----------+---------+-----------+
-    odoo    | odoo  | UTF8     | en_US   | en_US.UTF8 |
-    postgres| odoo  | UTF8     | en_US   | en_US.UTF8 |
-   ```
-
 5. Sal del cliente PostgreSQL:
    ```sql
    \q
    ```
 
----
-
-**2. Restaurar la base de datos `odoo` desde un archivo `.dump`:**
-1. Coloca el archivo `.dump` en la carpeta `./db/backups` en tu máquina anfitriona. Ejemplo:
-   ```bash
-   cp /ruta/al/archivo.dump ./db/backups
-   ```
-
-2. Accede nuevamente al contenedor del servicio PostgreSQL(si no esta dentro del contenedor):
+**2. Restaurar la base de datos `odoo` manualmente desde un archivo `.dump`:**
+1. Coloca el archivo `.dump` en la carpeta `./backups/db` en tu máquina anfitriona
+2. Accede al contenedor del servicio PostgreSQL:
    ```bash
    docker exec -it odoo-db bash
    ```
 
 3. Dentro del contenedor, restaura el `.dump` en la base de datos `odoo`:
-   - Para un archivo `.dump` en formato personalizado:
-     ```bash
-     pg_restore -U odoo -d odoo /backups/archivo.dump
-     ```
-   - Para un archivo SQL plano:
-     ```bash
-     psql -U odoo -d odoo -f /backups/archivo.dump
-     ```
+   ```bash
+   pg_restore -U odoo -d odoo /backups/archivo.dump
+   ```
 
 4. Verifica que las tablas se restauraron correctamente:
    ```bash
