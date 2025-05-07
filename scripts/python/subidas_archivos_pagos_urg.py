@@ -189,7 +189,7 @@ def recorrer(path,icontrato,conn):
      recorrer(archivos,icontrato,conn)
 
 ###comienzo el pograma###
-print("----------COMIENZA EL PROGRAMA 555555 -----------")
+print("----------COMIENZA EL PROGRAMA -----------")
 # Se agrega al archivo log
 logs = "-*-*-*-*-*-*-*-*-*- Dia y hora del reporte: " + str(hora) + "-*-*-*-*-*-*-*-*-*- \n"
 log(logs)
