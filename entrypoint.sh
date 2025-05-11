@@ -21,4 +21,4 @@ wait-for-it.py ${HOST}:5432 -t 60
 
 # Iniciar Odoo
 echo "Iniciando Odoo..."
-exec python3 /opt/odoo/odoo-bin -c /etc/odoo/odoo.conf
+exec python3.10 /opt/odoo/odoo-bin -c /etc/odoo/odoo.conf

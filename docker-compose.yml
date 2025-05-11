@@ -44,6 +44,7 @@ services:
       - ./addons/Aeroportuaria_ERP/other:/mnt/extra-addons/other
       - ./addons/Aeroportuaria_ERP/productivity:/mnt/extra-addons/productivity
       - ./addons/Aeroportuaria_ERP/themes:/mnt/extra-addons/themes
+      - ./addons/qweb_test:/mnt/extra-addons/qweb_test
       - ./scripts/python:/home/odoo/PY/scripts
       - ./scripts/shell:/opt/scripts/shell
       - ./archivos_entrada:/home/odoo/PY/archivos
@@ -52,7 +53,7 @@ services:
       - HOST=db
       - USER=odoo
       - PASSWORD=odoo
-      - ADDONS_PATH=/mnt/extra-addons/Aeroportuaria_ERP,/mnt/extra-addons/account,/mnt/extra-addons/asset,/mnt/extra-addons/budget,/mnt/extra-addons/other,/mnt/extra-addons/productivity,/mnt/extra-addons/themes,/opt/odoo/addons
+      - ADDONS_PATH=/mnt/extra-addons/Aeroportuaria_ERP,/mnt/extra-addons/account,/mnt/extra-addons/asset,/mnt/extra-addons/budget,/mnt/extra-addons/other,/mnt/extra-addons/productivity,/mnt/extra-addons/themes,/mnt/extra-addons/qweb_test,/opt/odoo/addons
       - ADMIN_PASSWD=admin123
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8069/web/health"]

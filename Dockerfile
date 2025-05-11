@@ -4,16 +4,19 @@ FROM ubuntu:20.04
 # Configurar variables de entorno
 ENV DEBIAN_FRONTEND=noninteractive \
     ODOO_VERSION=15.0 \
-    PYTHON_VERSION=3.8 \
+    PYTHON_VERSION=3.10.12 \
     WKHTMLTOPDF_VERSION=0.12.5
 
 # Instalar dependencias del sistema y Python
 RUN apt-get update && apt-get install -y \
-    python3 \
-    python3-pip \
-    python3-dev \
-    python3-venv \
-    python3-wheel \
+    software-properties-common \
+    && add-apt-repository ppa:deadsnakes/ppa \
+    && apt-get update \
+    && apt-get install -y \
+    python3.10 \
+    python3.10-dev \
+    python3.10-venv \
+    python3.10-distutils \
     libpq-dev \
     libxml2-dev \
     libxslt1-dev \
@@ -26,7 +29,9 @@ RUN apt-get update && apt-get install -y \
     cron \
     curl \
     postgresql-client \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10 \
+    && ln -sf /usr/bin/python3.10 /usr/bin/python3
 
 # Instalar dependencias específicas para wkhtmltopdf primero
 RUN apt-get update && apt-get install -y \
@@ -51,20 +56,51 @@ RUN wget -q https://github.com/odoo/odoo/archive/${ODOO_VERSION}.tar.gz \
     && rm ${ODOO_VERSION}.tar.gz
 
 # Instalar dependencias base críticas primero
-RUN pip3 install --no-cache-dir \
+RUN python3.10 -m pip install --no-cache-dir \
     wheel==0.37.1 \
     setuptools==59.6.0 \
     cython==0.29.33 \
-    psycopg2-binary
+    psycopg2-binary \
+    gevent==23.9.1 \
+    greenlet==3.1.1 \
+    Jinja2==2.11.3 \
+    MarkupSafe==1.1.0 \
+    Pillow==9.0.1 \
+    PyPDF2==1.26.0 \
+    reportlab==3.5.59 \
+    lxml==4.6.5 \
+    libsass==0.18.0 \
+    psutil==5.6.7 \
+    pyOpenSSL==19.0.0 \
+    python-ldap==3.4.0 \
+    pyusb==1.0.2 \
+    requests==2.25.1 \
+    urllib3==1.26.5 \
+    Werkzeug==2.0.2 \
+    xlrd==1.2.0
 
 # Copiar tu archivo requirements.txt al contenedor
 COPY requirements.txt /tmp/requirements.txt
 
-# Instalar tus dependencias específicas antes que las de Odoo
-RUN pip3 install --no-cache-dir -r /tmp/requirements.txt
+# Instalar cryptography primero en la versión específica
+# Nota: Usando una versión más reciente compatible con Python 3.10
+RUN python3.10 -m pip install --no-cache-dir cryptography==36.0.2
+
+# Instalar PyYAML por separado para evitar problemas de compilación
+RUN python3.10 -m pip install --no-cache-dir --no-build-isolation --global-option="--without-libyaml" PyYAML==5.4.1
+
+# Crear un nuevo requirements sin PyYAML y sin cryptography
+RUN grep -v "PyYAML\|cryptography" /tmp/requirements.txt > /tmp/requirements_filtered.txt
+
+# Instalar el resto de dependencias
+RUN python3.10 -m pip install --no-cache-dir -r /tmp/requirements_filtered.txt
+
+
+# Crear un requirements filtrado para Odoo excluyendo paquetes problemáticos
+RUN grep -v -E "gevent|greenlet|cryptography|Jinja2|libsass|lxml|MarkupSafe|ofxparse|Pillow|psutil|psycopg2|pyopenssl|PyPDF2|pypiwin32|python-ldap|pyusb|reportlab|requests|urllib3|Werkzeug|xlrd" /opt/odoo/requirements.txt > /tmp/odoo_requirements_filtered.txt
 
 # Instalar dependencias de Odoo después para evitar conflictos
-RUN pip3 install --no-cache-dir -r /opt/odoo/requirements.txt
+RUN python3.10 -m pip install --no-cache-dir -r /tmp/odoo_requirements_filtered.txt
 
 # Configuración del usuario y directorios
 RUN useradd -m -d /opt/odoo -U -r -s /bin/bash odoo \
@@ -91,7 +127,7 @@ RUN chown odoo:odoo /etc/odoo/odoo.conf \
     && chmod +x /opt/scripts/shell/*.sh
 
 # Configurar cron
-RUN echo "*/5 * * * * odoo /usr/bin/python3 /home/odoo/PY/scripts/subidas_archivos_pagos_urg.py >> /home/odoo/PY/logs/script.log 2>&1" >> /etc/cron.d/odoo-cron \
+RUN echo "*/5 * * * * odoo /usr/bin/python3.10 /home/odoo/PY/scripts/subidas_archivos_pagos_urg.py >> /home/odoo/PY/logs/script.log 2>&1" >> /etc/cron.d/odoo-cron \
     && chmod 0644 /etc/cron.d/odoo-cron
 
 # Crear archivo para logs
