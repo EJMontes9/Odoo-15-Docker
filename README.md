@@ -27,7 +27,9 @@ The complete project documentation is organized in the following files:
    ```bash
    # Linux/Mac
    ./scripts/shell/setup_db_from_host.sh
+   ```
 
+   ```bash
    # Windows (PowerShell)
    .\scripts\shell\setup_db_from_host.ps1
    ```
