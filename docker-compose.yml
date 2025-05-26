@@ -34,7 +34,7 @@ services:
       - "0.0.0.0:8069:8069"
       - "0.0.0.0:8072:8072"
     volumes:
-      - odoo-web-data:/var/lib/odoo
+      - ./data/filestorage:/var/lib/odoo
       - ./logs:/var/log/odoo
       - ./config/odoo.conf:/etc/odoo/odoo.conf
       - ./addons/Aeroportuaria_ERP:/mnt/extra-addons/Aeroportuaria_ERP
@@ -70,7 +70,7 @@ services:
     ports:
       - "0.0.0.0:8080:80"
     volumes:
-      - odoo-web-data:/srv/odoo-data
+      - ./data/filestorage:/srv/filestorage
       - ./logs:/srv/logs
       - ./logs_script:/srv/logs_script
       - ./archivos_entrada:/srv/archivos_entrada
@@ -114,7 +114,7 @@ services:
     volumes:
       - duplicati-data:/data
       - ./backups:/backups
-      - odoo-web-data:/source/odoo-data:ro
+      - ./data/filestorage:/source/filestorage:ro
       - ./logs:/source/logs:ro
       - ./config:/source/config:ro
       - ./scripts:/source/scripts:ro
@@ -126,8 +126,6 @@ services:
 
 volumes:
   odoo-db-data:
-    driver: local
-  odoo-web-data:
     driver: local
   pgadmin-data:
     driver: local
