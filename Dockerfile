@@ -33,6 +33,17 @@ RUN apt-get update && apt-get install -y \
     && curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10 \
     && ln -sf /usr/bin/python3.10 /usr/bin/python3
 
+RUN apt-get update && apt-get install -y \
+    libreoffice \
+    libreoffice-writer \
+    && rm -rf /var/lib/apt/lists/*
+
+# Instalar las dependencias de Python para py3o
+RUN python3.10 -m pip install --no-cache-dir \
+    py3o.template \
+    py3o.formats
+
+
 # Instalar dependencias específicas para wkhtmltopdf primero
 RUN apt-get update && apt-get install -y \
     xfonts-75dpi \
