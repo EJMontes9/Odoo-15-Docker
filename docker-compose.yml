@@ -34,6 +34,7 @@ services:
       - "0.0.0.0:8069:8069"
       - "0.0.0.0:8072:8072"
     volumes:
+      - ./addons:/mnt/extra-addons
       - ./data/filestorage:/var/lib/odoo
       - ./logs:/var/log/odoo
       - ./config/odoo.conf:/etc/odoo/odoo.conf
@@ -50,6 +51,9 @@ services:
       - ./archivos_entrada:/home/odoo/PY/archivos
       - ./logs_script:/home/odoo/PY/logs
     environment:
+      - LANG=es_EC.UTF-8
+      - LANGUAGE=es_EC:es
+      - LC_ALL=es_EC.UTF-8
       - HOST=db
       - USER=odoo
       - PASSWORD=odoo

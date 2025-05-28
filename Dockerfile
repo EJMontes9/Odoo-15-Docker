@@ -43,6 +43,18 @@ RUN python3.10 -m pip install --no-cache-dir \
     py3o.template \
     py3o.formats
 
+# Instalar locales necesarios
+RUN apt-get update && apt-get install -y locales
+
+# Generar locales para Ecuador y otros que puedas necesitar
+RUN sed -i -e 's/# es_EC.UTF-8 UTF-8/es_EC.UTF-8 UTF-8/' /etc/locale.gen && \
+    locale-gen
+
+# Establecer variables de entorno para locale
+ENV LANG es_EC.UTF-8
+ENV LANGUAGE es_EC:es
+ENV LC_ALL es_EC.UTF-8
+
 
 # Instalar dependencias específicas para wkhtmltopdf primero
 RUN apt-get update && apt-get install -y \
