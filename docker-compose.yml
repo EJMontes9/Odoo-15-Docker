@@ -27,6 +27,8 @@ services:
     build: .
     container_name: odoo-app
     restart: unless-stopped
+    command: bash -c "chmod +x /entrypoint.sh && /entrypoint.sh"
+    entrypoint: []
 
     depends_on:
       db:
@@ -51,6 +53,7 @@ services:
       - ./scripts/shell:/opt/scripts/shell
       - ./archivos_entrada:/home/odoo/PY/archivos
       - ./logs_script:/home/odoo/PY/logs
+      - ./entrypoint_unix.sh:/entrypoint.sh
     environment:
       - LANG=es_EC.UTF-8
       - LANGUAGE=es_EC:es
