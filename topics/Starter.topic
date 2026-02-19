@@ -11,13 +11,13 @@
         </description>
 
         <spotlight>
-            <a href="modulos/presupuesto/presupuesto-overview.md" type="start" summary="Documentación técnica completa del módulo de Presupuesto Gubernamental v1.0">Módulo Presupuesto v1.0</a>
+            <a href="presupuesto-overview.md" type="start" summary="Documentación técnica completa del módulo de Presupuesto Gubernamental v1.0">Módulo Presupuesto v1.0</a>
             <a href="instalacion-configuracion.md" type="install" summary="Guía de instalación y configuración del entorno de desarrollo Docker">Instalación y Configuración</a>
         </spotlight>
 
         <primary>
             <title>Documentación Técnica de Módulos</title>
-            <a href="modulos/presupuesto/presupuesto-overview.md" summary="Gestión de presupuestos gubernamentales, certificaciones, redistribuciones y cédula presupuestaria">
+            <a href="presupuesto-overview.md" summary="Gestión de presupuestos gubernamentales, certificaciones, redistribuciones y cédula presupuestaria">
                 <control>Módulo Presupuesto v1.0</control>
             </a>
             <a href="inicio.md" summary="Gestión de contratos de contratación pública (Próximamente)">

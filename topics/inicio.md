@@ -8,7 +8,7 @@ Documentación técnica del sistema ERP Odoo 15 para la Autoridad Aeroportuaria 
 
 Documentación completa de los módulos personalizados del sistema AAG ERP:
 
-- **[Módulo Presupuesto v1.0](modulos/presupuesto/presupuesto-overview.md)** - Gestión de presupuestos gubernamentales
+- **[Módulo Presupuesto v1.0](presupuesto-overview.md)** - Gestión de presupuestos gubernamentales
   - Presupuesto inicial y codificado
   - Certificaciones presupuestarias
   - Redistribuciones
