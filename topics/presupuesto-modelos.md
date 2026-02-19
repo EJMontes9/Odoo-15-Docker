@@ -1,4 +1,6 @@
-# Modelos y Base de Datos
+# Modelos y Base de Datos {switcher-key="Presupuesto v1.0"}
+
+<show-structure for="chapter,procedure" depth="2"/>
 
 ## Introducción
 
@@ -6,7 +8,7 @@ El módulo de Presupuesto Gubernamental define más de 30 modelos de datos que r
 
 ## Diagrama de Entidad-Relación (ERD)
 
-<!--```mermaid
+<code-block lang="mermaid">
 erDiagram
     budget_program ||--o{ budget_project : contiene
     budget_project ||--o{ account_analytic_account : contiene
@@ -81,7 +83,7 @@ erDiagram
         selection state
         integer year
     }
-```-->
+</code-block>
 
 ## Modelos Principales
 
@@ -174,7 +176,7 @@ def archive_activity(self):
     Archiva la actividad y actualiza archived_date
     """
     pass
-```-->
+</code-block>
 
 #### Restricciones
 
@@ -257,7 +259,7 @@ def archive_activity(self):
 
 #### Estados del Workflow
 
-<!--```mermaid
+<code-block lang="mermaid">
 stateDiagram-v2
     [*] --> waiting: Crear
     waiting --> admitted: Admitir
@@ -266,7 +268,7 @@ stateDiagram-v2
     admitted --> canceled: Cancelar
     awarded --> [*]
     canceled --> [*]
-```-->
+</code-block>
 
 #### Métodos Principales
 
@@ -287,7 +289,7 @@ def action_award(self):
 def action_cancel(self):
     """Cancela la certificación y libera presupuesto"""
     pass
-```-->
+</code-block>
 
 #### Validaciones
 
@@ -474,7 +476,7 @@ def validate_redistribution(self):
     3. No se excedan los disponibles
     """
     pass
-```-->
+</code-block>
 
 ---
 
@@ -550,7 +552,7 @@ class WizardExportQueryDeluxe(models.TransientModel):
         - Totales y subtotales
         """
         pass
-```-->
+</code-block>
 
 ---
 
@@ -661,7 +663,7 @@ budget_certification_id = fields.Many2one(
     'budget.certification',
     string='Certificación Presupuestaria'
 )
-```-->
+</code-block>
 
 ### account.move.line (Líneas de Asientos)
 
@@ -670,7 +672,7 @@ budget_certification_id = fields.Many2one(
 ```python
 cp_id = fields.Many2one('budget.certification', 'Certificación')
 activity_id = fields.Many2one('account.analytic.account', 'Actividad')
-```-->
+</code-block>
 
 **Métodos sobrescritos:**
 
@@ -684,7 +686,7 @@ def write(self, vals):
     if 'parent_state' in vals and vals['parent_state'] == 'posted':
         self._update_budget_accrued()
     return result
-```-->
+</code-block>
 
 ### account.payment (Pagos)
 
@@ -695,7 +697,7 @@ budget_certification_id = fields.Many2one(
     'budget.certification',
     string='Certificación'
 )
-```-->
+</code-block>
 
 **Métodos sobrescritos:**
 
@@ -708,7 +710,7 @@ def action_post(self):
     result = super().action_post()
     self._update_budget_paid()
     return result
-```-->
+</code-block>
 
 ---
 
@@ -716,16 +718,16 @@ def action_post(self):
 
 ### Jerarquía Estructural
 
-```-->
+</code-block>
 budget.program (Programa)
     └── budget.project (Proyecto)
             └── account.analytic.account (Actividad)
                     └── budget.classifier (Clasificador)
-```-->
+</code-block>
 
 ### Flujo de Datos Presupuestarios
 
-<!--```mermaid
+<code-block lang="mermaid">
 graph LR
     A[budget.initial] -->|asigna presupuesto| B[account.analytic.account]
     C[budget.redistribution] -->|modifica presupuesto| B
@@ -738,7 +740,7 @@ graph LR
     style B fill:#fff3e0
     style E fill:#e8f5e9
     style G fill:#f3e5f5
-```-->
+</code-block>
 
 ---
 

@@ -1,4 +1,6 @@
-# Módulo Presupuesto Gubernamental - Visión General
+# Módulo Presupuesto Gubernamental - Visión General {switcher-key="Presupuesto v1.0"}
+
+<show-structure for="chapter,procedure" depth="2"/>
 
 <tldr>
 <p><b>Versión:</b> 15.0.1</p>
@@ -133,7 +135,7 @@ Todas las dependencias deben estar instaladas y configuradas correctamente antes
 
 ## Mapa Conceptual del Módulo
 
-<!--```mermaid
+<code-block lang="mermaid">
 mindmap
   root((Presupuesto<br/>Gubernamental))
     Configuración
@@ -173,11 +175,11 @@ mindmap
         Pagos
       Compras/Contratos
         Certificaciones
-```-->
+</code-block>
 
 ## Flujo General del Módulo
 
-<!--```mermaid
+<code-block lang="mermaid">
 graph TB
     A[Configuración Inicial] --> B[Creación de Actividades]
     B --> C[Presupuesto Inicial]
@@ -200,7 +202,7 @@ graph TB
     style C fill:#fff4e1
     style G fill:#e8f5e9
     style M fill:#f3e5f5
-```-->
+</code-block>
 
 ## Principales Usuarios del Módulo
 

@@ -1,4 +1,6 @@
-# Flujos de Trabajo
+# Flujos de Trabajo {switcher-key="Presupuesto v1.0"}
+
+<show-structure for="chapter,procedure" depth="2"/>
 
 ## Introducción
 
@@ -6,7 +8,7 @@ Este documento describe los flujos de trabajo principales del módulo de Presupu
 
 ## Ciclo de Vida del Presupuesto Anual
 
-<!--```mermaid
+<code-block lang="mermaid">
 stateDiagram-v2
     [*] --> Configuración: Inicio de Año
     Configuración --> Planificación: Estructura Creada
@@ -39,7 +41,7 @@ stateDiagram-v2
         Certificaciones --> Redistribuciones
         Redistribuciones --> Certificaciones
     }
-```-->
+</code-block>
 
 ## Flujo 1: Creación de Presupuesto Inicial
 
@@ -86,7 +88,7 @@ self.approval_date = fields.Date.today()
 
 ### Diagrama de Secuencia
 
-<!--```mermaid
+<code-block lang="mermaid">
 sequenceDiagram
     actor JP as Jefe Presupuesto
     participant BI as budget.initial
@@ -106,13 +108,13 @@ sequenceDiagram
     ADM->>BI: Aprobar
     BI->>BI: Estado: approved
     BI-->>AA: Actualizar presupuesto inicial
-```-->
+</code-block>
 
 ---
 
 ## Flujo 2: Emisión de Certificación Presupuestaria
 
-<!--```mermaid
+<code-block lang="mermaid">
 stateDiagram-v2
     [*] --> Waiting: Crear Certificación
     Waiting --> Admitted: Admitir (validar disponibilidad)
@@ -131,7 +133,7 @@ stateDiagram-v2
         Se vincula al proceso
         de contratación
     end note
-```-->
+</code-block>
 
 <procedure title="Proceso de Certificación Presupuestaria">
 <step>
@@ -185,7 +187,7 @@ def action_admit(self):
 
 ### Diagrama de Secuencia - Certificación
 
-<!--```mermaid
+<code-block lang="mermaid">
 sequenceDiagram
     actor U as Usuario
     participant BC as budget.certification
@@ -210,7 +212,7 @@ sequenceDiagram
 
     U->>BC: Adjudicar a Proveedor X
     BC->>BC: Estado: awarded
-```-->
+</code-block>
 
 ---
 
@@ -269,7 +271,7 @@ def validate_balance(self):
 
 ### Restricciones de Redistribución
 
-<!--```mermaid
+<code-block lang="mermaid">
 graph TB
     R[Redistribución] --> V1{¿Balance 0?}
     V1 -->|No| E1[Error: No balanceada]
@@ -283,13 +285,13 @@ graph TB
     style E2 fill:#ffcdd2
     style E3 fill:#ffcdd2
     style OK fill:#c8e6c9
-```-->
+</code-block>
 
 ---
 
 ## Flujo 4: Ejecución Presupuestaria (Devengado y Pago)
 
-<!--```mermaid
+<code-block lang="mermaid">
 sequenceDiagram
     participant BC as Certificación
     participant AM as Factura/Asiento
@@ -311,7 +313,7 @@ sequenceDiagram
     AP->>AM: Vincular a factura
     AP->>QD: Pagado +$10,000
     QD->>QD: Actualizar estado
-```-->
+</code-block>
 
 <procedure title="Registro de Devengado y Pago">
 <step>
@@ -351,7 +353,7 @@ def action_post(self):
 
 ## Flujo 5: Consulta de Cédula Presupuestaria
 
-<!--```mermaid
+<code-block lang="mermaid">
 graph LR
     U[Usuario] -->|Accede| QD[Cédula Presupuestaria]
     QD --> F[Aplica Filtros]
@@ -367,7 +369,7 @@ graph LR
 
     style QD fill:#f3e5f5
     style E fill:#c8e6c9
-```-->
+</code-block>
 
 <procedure title="Consultar Estado Presupuestario">
 <step>Ir a Presupuesto > Reportes y Consultas > Cédula Presupuestaria</step>
@@ -389,7 +391,7 @@ graph LR
 
 ## Flujo 6: Solicitud y Aprobación de Certificación
 
-<!--```mermaid
+<code-block lang="mermaid">
 stateDiagram-v2
     [*] --> Borrador: Crear Solicitud
     Borrador --> EnRevisión: Enviar
@@ -399,7 +401,7 @@ stateDiagram-v2
     Rechazada --> [*]
     Aprobada --> Certificación: Generar Certificación
     Certificación --> [*]
-```-->
+</code-block>
 
 <procedure title="Workflow de Solicitud">
 <step>

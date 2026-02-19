@@ -1,4 +1,6 @@
-# Arquitectura y Estructura del Módulo Presupuesto
+# Arquitectura y Estructura del Módulo Presupuesto {switcher-key="Presupuesto v1.0"}
+
+<show-structure for="chapter,procedure" depth="2"/>
 
 ## Introducción
 
@@ -6,7 +8,7 @@ El módulo de Presupuesto Gubernamental sigue la arquitectura MVC (Modelo-Vista-
 
 ## Diagrama de Arquitectura de Capas
 
-<!--```mermaid
+<code-block lang="mermaid">
 graph TB
     subgraph "Capa de Presentación"
         V1[Vistas XML/QWeb]
@@ -59,11 +61,11 @@ graph TB
     style M1 fill:#fff3e0
     style D1 fill:#f3e5f5
     style I1 fill:#e8f5e9
-```-->
+</code-block>
 
 ## Estructura de Directorios
 
-```-->
+</code-block>
 budget_gov/
 ├── __init__.py                 # Inicialización del módulo
 ├── __manifest__.py             # Metadatos y dependencias
@@ -134,7 +136,7 @@ budget_gov/
     └── src/
         └── js/
             └── file_name.js    # JavaScript personalizado
-```-->
+</code-block>
 
 ## Patrones de Diseño Utilizados
 
@@ -170,7 +172,7 @@ certifications = self.env['budget.certification'].search([
     ('state', '=', 'approved'),
     ('year', '=', 2024)
 ])
-```-->
+</code-block>
 
 ### 3. Patrón Wizard para Procesos Complejos
 
@@ -188,7 +190,7 @@ class WizardExportQueryDeluxe(models.TransientModel):
     def action_export(self):
         # Lógica de exportación
         pass
-```-->
+</code-block>
 
 ### 4. Patrón Herencia para Extensibilidad
 
@@ -220,7 +222,7 @@ class AccountMove(models.Model):
 
 ## Diagrama de Componentes
 
-<!--```mermaid
+<code-block lang="mermaid">
 graph TB
     subgraph "Módulo Presupuesto Gubernamental"
         subgraph "Configuración"
@@ -279,7 +281,7 @@ graph TB
     style P1 fill:#fff9c4
     style E2 fill:#c8e6c9
     style CO1 fill:#f8bbd0
-```-->
+</code-block>
 
 ## Integración con Otros Módulos
 
@@ -307,7 +309,7 @@ graph TB
 </step>
 </procedure>
 
-<!--```mermaid
+<code-block lang="mermaid">
 sequenceDiagram
     participant U as Usuario
     participant BC as Budget Certification
@@ -327,7 +329,7 @@ sequenceDiagram
     U->>AP: Registrar Pago
     AP->>AM: Vincular a Factura
     AP->>QD: Actualizar Pagado
-```-->
+</code-block>
 
 ### Módulo de Planificación (planification)
 
@@ -438,7 +440,7 @@ LEFT JOIN budget_program bp ON aa.program_id = bp.id
 LEFT JOIN budget_project bpr ON aa.project_id = bpr.id
 LEFT JOIN budget_classifier bc ON aa.classifier_id = bc.id
 -- ... joins adicionales para cálculos
-```-->
+</code-block>
 
 <note>
 La vista SQL se regenera automáticamente cuando se instala o actualiza el módulo.
@@ -446,7 +448,7 @@ La vista SQL se regenera automáticamente cuando se instala o actualiza el módu
 
 ## Capas de Seguridad
 
-<!--```mermaid
+<code-block lang="mermaid">
 graph TB
     U[Usuario] --> G{Grupo de Seguridad}
     G -->|Administrador| A1[Acceso Total]
@@ -464,7 +466,7 @@ graph TB
     style G fill:#fff3e0
     style R1 fill:#f3e5f5
     style M fill:#e8f5e9
-```-->
+</code-block>
 
 Las reglas de seguridad se implementan en tres niveles:
 

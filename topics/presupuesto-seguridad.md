@@ -1,4 +1,6 @@
-# Seguridad y Permisos
+# Seguridad y Permisos {switcher-key="Presupuesto v1.0"}
+
+<show-structure for="chapter,procedure" depth="2"/>
 
 ## Introducción
 
@@ -230,7 +232,7 @@ Las reglas de registro limitan qué registros puede ver cada usuario:
     <field name="domain_force">[('create_uid', '=', user.id)]</field>
     <field name="groups" eval="[(4, ref('group_request_budget_user'))]"/>
 </record>
-```-->
+</code-block>
 
 **Efecto:** Los usuarios con rol "Solicitante" solo ven sus propias solicitudes.
 
@@ -247,7 +249,7 @@ Las reglas de registro limitan qué registros puede ver cada usuario:
     ]</field>
     <field name="groups" eval="[(4, ref('group_budget_user'))]"/>
 </record>
-```-->
+</code-block>
 
 **Efecto:** Los usuarios generales solo ven certificaciones de su departamento o donde son responsables.
 
@@ -263,7 +265,7 @@ Las reglas de registro limitan qué registros puede ver cada usuario:
         (4, ref('group_budget_presupuesto'))
     ]"/>
 </record>
-```-->
+</code-block>
 
 **Efecto:** Administradores y analistas de presupuesto ven todas las certificaciones.
 
@@ -310,7 +312,7 @@ Algunos campos solo pueden ser editados por administradores:
     ('planning', 'in', ['active', 'archived']),
     '!'
 ]}"/>
-```-->
+</code-block>
 
 ## Validaciones de Seguridad en el Código
 
@@ -323,7 +325,7 @@ def action_approve(self):
         raise UserError('No tiene permisos para aprobar el presupuesto inicial')
 
     self.state = 'approved'
-```-->
+</code-block>
 
 ### Validación de Propiedad
 
@@ -337,11 +339,11 @@ def _check_responsable(self):
                 raise ValidationError(
                     'Solo puede asignarse a sí mismo como responsable'
                 )
-```-->
+</code-block>
 
 ## Diagrama de Flujo de Seguridad
 
-<!--```mermaid
+<code-block lang="mermaid">
 flowchart TD
     U[Usuario Intenta Acción] --> A{¿Tiene Grupo<br/>de Seguridad?}
     A -->|No| D1[Acceso Denegado]
@@ -357,7 +359,7 @@ flowchart TD
     style D2 fill:#ffecb3
     style D3 fill:#ffcdd2
     style F fill:#c8e6c9
-```-->
+</code-block>
 
 ## Mejores Prácticas de Seguridad
 
