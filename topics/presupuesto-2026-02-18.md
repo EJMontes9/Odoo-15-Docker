@@ -84,7 +84,7 @@ La vista SQL realiza LEFT JOINS sobre las siguientes tablas:
 
 ### Cálculo de campos presupuestarios
 
-```python
+<code-block lang="python">
 # Presupuesto Inicial
 initial = SUM(budget_initial_line.amount)
 
@@ -232,7 +232,7 @@ El prefijo "Excel:" aclara que estos reportes generan archivos descargables, no 
 ### Archivos modificados
 
 **models/__init__.py:**
-```python
+<code-block lang="python">
 # ELIMINADO:
 # from . import budget_cedula_presupuestaria
 
@@ -241,19 +241,19 @@ from . import budget_query_deluxe
 ```
 
 **wizard/__init__.py:**
-```python
+<code-block lang="python">
 # AÑADIDO:
 from . import wizard_export_query_deluxe
 ```
 
 **report/__init__.py:**
-```python
+<code-block lang="python">
 # AÑADIDO:
 from . import report_query_deluxe_excel
 ```
 
 **__manifest__.py:**
-```python
+<code-block lang="python">
 'data': [
     # ... otros archivos ...
 
@@ -280,7 +280,7 @@ access_wizard_export_query_deluxe,wizard.export.query.deluxe,model_wizard_export
 ```
 
 **report/reports.xml:**
-```xml
+<code-block lang="xml">
 <!-- AÑADIDO: -->
 <record id="report_query_deluxe_xlsx" model="ir.actions.report">
     <field name="name">Exportar Cédula Presupuestaria</field>
@@ -301,7 +301,7 @@ access_wizard_export_query_deluxe,wizard.export.query.deluxe,model_wizard_export
 
 **Patrón:** Modelo de solo lectura con SQL personalizado
 
-```python
+<code-block lang="python">
 class BudgetQueryDeluxe(models.Model):
     _name = 'budget.query.deluxe'
     _description = 'Cédula Presupuestaria'
@@ -328,7 +328,7 @@ class BudgetQueryDeluxe(models.Model):
 
 **Patrón:** Herencia de clase abstracta para generación de Excel
 
-```python
+<code-block lang="python">
 from odoo.addons.report_xlsx.report.report_xlsx import ReportXlsxAbstract
 
 class QueryDeluxeExcelReport(models.AbstractModel):
@@ -358,7 +358,7 @@ class QueryDeluxeExcelReport(models.AbstractModel):
 
 **Patrón:** Wizard transitorio para confirmar acción
 
-```python
+<code-block lang="python">
 class WizardExportQueryDeluxe(models.TransientModel):
     _name = 'wizard.export.query.deluxe'
     _description = 'Exportar Cédula Presupuestaria a Excel'
@@ -382,7 +382,7 @@ class WizardExportQueryDeluxe(models.TransientModel):
 
 **Vista search con múltiples filtros:**
 
-```xml
+<code-block lang="xml">
 <search string="Buscar Cédula Presupuestaria">
     <!-- Filtros predefinidos -->
     <filter name="has_balance" string="Con saldo" domain="[('balance_to_pay', '>', 0)]"/>
@@ -577,7 +577,7 @@ Para agregar nuevas columnas calculadas (ejemplo: % de ejecución):
 4. Agregar columna en el reporte Excel
 
 Ejemplo:
-```python
+<code-block lang="python">
 # En budget_query_deluxe.py
 execution_percentage = fields.Float('% Ejecución', readonly=True)
 

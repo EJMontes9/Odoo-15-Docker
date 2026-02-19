@@ -225,7 +225,7 @@ Las reglas de registro limitan qué registros puede ver cada usuario:
 
 ### Regla: Solicitudes Propias
 
-```xml
+<code-block lang="xml">
 <record id="request_budget_own_rule" model="ir.rule">
     <field name="name">Solicitudes Propias</field>
     <field name="model_id" ref="model_request_budget_certification"/>
@@ -238,7 +238,7 @@ Las reglas de registro limitan qué registros puede ver cada usuario:
 
 ### Regla: Certificaciones por Departamento
 
-```xml
+<code-block lang="xml">
 <record id="certification_department_rule" model="ir.rule">
     <field name="name">Certificaciones por Departamento</field>
     <field name="model_id" ref="model_budget_certification"/>
@@ -255,7 +255,7 @@ Las reglas de registro limitan qué registros puede ver cada usuario:
 
 ### Regla: Todas las Certificaciones (Administradores)
 
-```xml
+<code-block lang="xml">
 <record id="certification_manager_rule" model="ir.rule">
     <field name="name">Todas las Certificaciones</field>
     <field name="model_id" ref="model_budget_certification"/>
@@ -305,7 +305,7 @@ Algunos campos solo pueden ser editados por administradores:
 
 ### Implementación en Vistas
 
-```xml
+<code-block lang="xml">
 <field name="code" attrs="{'readonly': [
     ('id', '!=', False),
     '|',
@@ -318,7 +318,7 @@ Algunos campos solo pueden ser editados por administradores:
 
 ### Validación de Permisos
 
-```python
+<code-block lang="python">
 def action_approve(self):
     """Aprobar presupuesto inicial - Solo Administradores"""
     if not self.env.user.has_group('budget_gov.group_budget_manager'):
@@ -329,7 +329,7 @@ def action_approve(self):
 
 ### Validación de Propiedad
 
-```python
+<code-block lang="python">
 @api.constrains('responsable_id')
 def _check_responsable(self):
     """Verificar que el usuario puede asignar responsables"""

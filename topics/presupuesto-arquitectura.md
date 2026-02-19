@@ -160,7 +160,7 @@ Métodos en los modelos que procesan acciones del usuario y coordinan entre mode
 
 Odoo proporciona un ORM completo que abstrae las operaciones de base de datos:
 
-```python
+<code-block lang="python">
 # Ejemplo de uso del ORM
 budget = self.env['budget.initial'].create({
     'name': 'Presupuesto 2024',
@@ -178,7 +178,7 @@ certifications = self.env['budget.certification'].search([
 
 Los wizards en `wizard/` implementan procesos multi-paso:
 
-```python
+<code-block lang="python">
 class WizardExportQueryDeluxe(models.TransientModel):
     _name = 'wizard.export.query.deluxe'
     _description = 'Asistente para exportar Cédula Presupuestaria'
@@ -409,7 +409,7 @@ El módulo utiliza **vistas SQL** para optimizar consultas complejas:
 
 Esta vista consolida información de múltiples tablas para mostrar la cédula presupuestaria:
 
-```sql
+<code-block lang="sql">
 CREATE OR REPLACE VIEW budget_query_deluxe AS
 SELECT
     -- Identificación única

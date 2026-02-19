@@ -158,7 +158,7 @@ Este es el modelo central del sistema presupuestario. Representa las actividades
 
 #### Métodos Principales
 
-```python
+<code-block lang="python">
 def get_budget_available(self, year):
     """
     Calcula el presupuesto disponible de la actividad para un año dado
@@ -272,7 +272,7 @@ stateDiagram-v2
 
 #### Métodos Principales
 
-```python
+<code-block lang="python">
 @api.depends('activities_ids', 'activities_ids.amount')
 def _compute_total(self):
     """Calcula el total de la certificación sumando actividades"""
@@ -467,7 +467,7 @@ Líneas individuales del presupuesto inicial:
 Las redistribuciones NO pueden mover presupuesto entre gastos corrientes y gastos de capital. Solo se permiten movimientos dentro del mismo tipo de gasto.
 </note>
 
-```python
+<code-block lang="python">
 def validate_redistribution(self):
     """
     Valida que:
@@ -539,7 +539,7 @@ Este modelo es una VISTA SQL, no una tabla. Se regenera automáticamente al actu
 
 El modelo incluye un wizard especializado para exportar la cédula presupuestaria a Excel con formato oficial:
 
-```python
+<code-block lang="python">
 class WizardExportQueryDeluxe(models.TransientModel):
     _name = 'wizard.export.query.deluxe'
 
@@ -658,7 +658,7 @@ class WizardExportQueryDeluxe(models.TransientModel):
 
 **Campos añadidos:**
 
-```python
+<code-block lang="python">
 budget_certification_id = fields.Many2one(
     'budget.certification',
     string='Certificación Presupuestaria'
@@ -669,14 +669,14 @@ budget_certification_id = fields.Many2one(
 
 **Campos añadidos:**
 
-```python
+<code-block lang="python">
 cp_id = fields.Many2one('budget.certification', 'Certificación')
 activity_id = fields.Many2one('account.analytic.account', 'Actividad')
 </code-block>
 
 **Métodos sobrescritos:**
 
-```python
+<code-block lang="python">
 def write(self, vals):
     """
     Al validar una factura, actualiza automáticamente el devengado
@@ -692,7 +692,7 @@ def write(self, vals):
 
 **Campos añadidos:**
 
-```python
+<code-block lang="python">
 budget_certification_id = fields.Many2one(
     'budget.certification',
     string='Certificación'
@@ -701,7 +701,7 @@ budget_certification_id = fields.Many2one(
 
 **Métodos sobrescritos:**
 
-```python
+<code-block lang="python">
 def action_post(self):
     """
     Al registrar un pago, actualiza el monto pagado
