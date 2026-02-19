@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="AAG ERP - Sistema de Gestión Aeroportuaria" id="starter">
+
+    <section-starting-page>
+        <title>AAG ERP - Sistema de Gestión Aeroportuaria</title>
+        <description>
+            Documentación técnica completa del Sistema ERP Odoo 15 para la Autoridad Aeroportuaria de Guayaquil
+        </description>
+
+        <spotlight>
+            <a href="modulos/presupuesto/presupuesto-overview.md" type="start" summary="Documentación técnica completa del módulo de Presupuesto Gubernamental v1.0">Módulo Presupuesto v1.0</a>
+            <a href="instalacion-configuracion.md" type="install" summary="Guía de instalación y configuración del entorno de desarrollo Docker">Instalación y Configuración</a>
+        </spotlight>
+
+        <primary>
+            <title>Documentación Técnica de Módulos</title>
+            <a href="modulos/presupuesto/presupuesto-overview.md" summary="Gestión de presupuestos gubernamentales, certificaciones, redistribuciones y cédula presupuestaria">
+                <control>Módulo Presupuesto v1.0</control>
+            </a>
+            <a href="inicio.md" summary="Gestión de contratos de contratación pública (Próximamente)">
+                <control>Módulo Contratos</control>
+            </a>
+            <a href="inicio.md" summary="Planificación POA, matriz de planificación y reformas presupuestarias (Próximamente)">
+                <control>Módulo Planificación</control>
+            </a>
+            <a href="inicio.md" summary="Recursos Humanos extendido para AAG (Próximamente)">
+                <control>Módulo Recursos Humanos</control>
+            </a>
+        </primary>
+
+        <secondary>
+            <title>Recursos y Guías</title>
+            <a href="instalacion-configuracion.md" summary="Requisitos, servicios Docker, variables de entorno, estructura de directorios">
+                <control>Instalación y Configuración</control>
+            </a>
+            <a href="gestion-base-datos.md" summary="Métodos de configuración, restauración de backups, regeneración de assets">
+                <control>Gestión de Base de Datos</control>
+            </a>
+            <a href="inicio.md" summary="Registro de cambios organizados por módulo y fecha (Próximamente)">
+                <control>Bitácora de Cambios</control>
+            </a>
+        </secondary>
+
+        <misc>
+            <cards>
+                <title>Solución de Problemas</title>
+                <a href="generacion-pdf.md" summary="Configuración de wkhtmltopdf, enlaces simbólicos, modificaciones de código">
+                    <control>Generación de PDF</control>
+                </a>
+                <a href="filestore.md" summary="Problemas de estructura de directorios, permisos, scripts de corrección">
+                    <control>Filestore</control>
+                </a>
+                <a href="pantalla-blanco-odoo.md" summary="Diagnóstico y solución de pantalla blanca después del login">
+                    <control>Pantalla en Blanco</control>
+                </a>
+            </cards>
+
+            <links>
+                <group>
+                    <title>Enlaces Externos</title>
+                    <a href="https://www.odoo.com/documentation/15.0/">Documentación Odoo 15</a>
+                    <a href="https://github.com/odoo/odoo/tree/15.0">Odoo 15 GitHub</a>
+                </group>
+            </links>
+        </misc>
+    </section-starting-page>
+
+</topic>

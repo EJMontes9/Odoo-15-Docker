@@ -1,0 +1,25 @@
+# Writerside - Archivos a ignorar
+
+# Archivos de salida/compilación
+output/
+*.zip
+
+# Archivos temporales
+.idea/
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Archivos de backup
+*.bak
+*.backup
+
+# Node modules (si llegas a usar)
+node_modules/
+
+# Archivos del sistema
+Thumbs.db

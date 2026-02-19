@@ -1,0 +1,52 @@
+# GitLab CI/CD para compilar documentación Writerside
+# Este archivo compila automáticamente la documentación cuando haces push
+
+stages:
+  - build
+  - deploy
+
+variables:
+  INSTANCE: Writerside/aag
+  DOCKER_IMAGE: jetbrains/writerside-builder:2026.02.8644
+
+# Job para construir la documentación
+build-docs:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - echo "Compilando documentación Writerside..."
+    - docker run --rm
+      -v $(pwd):/opt/sources
+      -e MODULE_INSTANCE=$INSTANCE
+      -e SOURCE_DIR=/opt/sources
+      -e OUTPUT_DIR=/opt/sources/output
+      -e RUNNER=gitlab
+      $DOCKER_IMAGE
+    - echo "Extrayendo archivos compilados..."
+    - cd output
+    - unzip -O UTF-8 webHelp*.zip -d public
+    - mv public ../
+  artifacts:
+    paths:
+      - public
+    expire_in: 1 week
+  only:
+    - main
+    - master
+
+# Job para publicar en GitLab Pages (documentación privada)
+pages:
+  stage: deploy
+  script:
+    - echo "Desplegando documentación en GitLab Pages..."
+    - ls -la public
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
+    - master
+  dependencies:
+    - build-docs
