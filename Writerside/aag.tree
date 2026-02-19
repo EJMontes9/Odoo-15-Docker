@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE instance-profile SYSTEM "https://resources.jetbrains.com/writerside/1.0/product-profile.dtd">
+<instance-profile id="aag" name="AAG ERP Documentacion" start-page="Starter.topic">
+    <toc-element topic="Starter.topic"/>
+    <toc-element topic="inicio.md"/>
+
+    <toc-element toc-title="Instalacion y Configuracion">
+        <toc-element topic="instalacion-configuracion.md"/>
+        <toc-element topic="gestion-base-datos.md"/>
+    </toc-element>
+
+    <toc-element toc-title="Solucion de Problemas">
+        <toc-element topic="generacion-pdf.md"/>
+        <toc-element topic="filestore.md"/>
+        <toc-element topic="pantalla-blanco-odoo.md"/>
+    </toc-element>
+
+    <toc-element toc-title="Documentacion Tecnica de Modulos">
+        <toc-element toc-title="Modulo: Presupuesto v1.0">
+            <toc-element topic="presupuesto-overview.md"/>
+            <toc-element topic="presupuesto-arquitectura.md"/>
+            <toc-element topic="presupuesto-modelos.md"/>
+            <toc-element topic="presupuesto-flujos.md"/>
+            <toc-element topic="presupuesto-seguridad.md"/>
+        </toc-element>
+    </toc-element>
+
+    <toc-element topic="sistemas-contables-financieros.md"/>
+
+    <toc-element toc-title="Bitacora de Cambios">
+        <toc-element toc-title="Modulo Planificacion">
+            <toc-element topic="planificacion-2026-02-11.md"/>
+        </toc-element>
+        <toc-element toc-title="Modulo Contratos">
+            <toc-element topic="contratos-2026-02-13.md"/>
+            <toc-element topic="contratos-2026-02-18.md"/>
+        </toc-element>
+        <toc-element toc-title="Modulo Presupuesto">
+            <toc-element topic="presupuesto-2026-02-18.md"/>
+        </toc-element>
+    </toc-element>
+</instance-profile>
