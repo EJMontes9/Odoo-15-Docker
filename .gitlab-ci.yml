@@ -21,10 +21,11 @@ build-docs:
       -v $(pwd):/opt/sources/Writerside
       -e MODULE_INSTANCE=Writerside/$INSTANCE
       -e SOURCE_DIR=/opt/sources
-      -e OUTPUT_DIR=/opt/sources/output
+      -e OUTPUT_DIR=/opt/sources/Writerside/output
       -e RUNNER=gitlab
       $DOCKER_IMAGE || echo "Builder terminó con warnings (exit 255), pero el ZIP se generó correctamente"
     - echo "Extrayendo archivos compilados..."
+    - ls -la
     - cd output
     - unzip -O UTF-8 webHelp*.zip -d public
     - mv public ../
