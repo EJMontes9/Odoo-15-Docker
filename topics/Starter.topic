@@ -2,7 +2,7 @@
 <!DOCTYPE topic SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
 <topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
-       title="AAG ERP - Sistema de Gestión Aeroportuaria" id="starter">
+       title="AAG ERP - Sistema de Gestión Aeroportuaria" id="Starter">
 
     <section-starting-page>
         <title>AAG ERP - Sistema de Gestión Aeroportuaria</title>
@@ -61,8 +61,8 @@
             <links>
                 <group>
                     <title>Enlaces Externos</title>
-                    <a href="https://www.odoo.com/documentation/15.0/">Documentación Odoo 15</a>
-                    <a href="https://github.com/odoo/odoo/tree/15.0">Odoo 15 GitHub</a>
+                    <a href="https://www.odoo.com/documentation/15.0/" summary="Documentación oficial de Odoo versión 15">Documentación Odoo 15</a>
+                    <a href="https://github.com/odoo/odoo/tree/15.0" summary="Repositorio oficial de Odoo 15 en GitHub">Odoo 15 GitHub</a>
                 </group>
             </links>
         </misc>
