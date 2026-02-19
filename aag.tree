@@ -38,8 +38,5 @@
         <toc-element toc-title="Modulo Presupuesto">
             <toc-element topic="presupuesto-2026-02-18.md"/>
         </toc-element>
-        <toc-element toc-title="Documentacion">
-            <toc-element topic="documentacion-2026-02-18.md"/>
-        </toc-element>
     </toc-element>
 </instance-profile>
