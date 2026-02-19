@@ -25,9 +25,9 @@ build-docs:
       -e RUNNER=gitlab
       $DOCKER_IMAGE || echo "Builder terminó con warnings (exit 255), pero el ZIP se generó correctamente"
     - echo "Extrayendo archivos compilados..."
-    - ls -la
+    - ls -la output/
     - cd output
-    - unzip -O UTF-8 webHelp*.zip -d public
+    - unzip -q webHelp*.zip -d public
     - mv public ../
   artifacts:
     paths:
