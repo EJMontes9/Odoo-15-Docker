@@ -6,7 +6,7 @@ stages:
   - deploy
 
 variables:
-  INSTANCE: Writerside/aag
+  INSTANCE: aag
   DOCKER_IMAGE: jetbrains/writerside-builder:2026.02.8644
 
 # Job para construir la documentación
@@ -18,8 +18,8 @@ build-docs:
   script:
     - echo "Compilando documentación Writerside..."
     - docker run --rm
-      -v $(pwd):/opt/sources
-      -e MODULE_INSTANCE=$INSTANCE
+      -v $(pwd):/opt/sources/Writerside
+      -e MODULE_INSTANCE=Writerside/$INSTANCE
       -e SOURCE_DIR=/opt/sources
       -e OUTPUT_DIR=/opt/sources/output
       -e RUNNER=gitlab
